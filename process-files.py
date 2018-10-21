@@ -3,6 +3,8 @@ import os
 
 INPUT_TEXT_DIR = "data"
 
+OUTPUT_FILE = "output.txt"
+
 def is_doc_start_line(line):
     return line.startswith('<doc')
 
@@ -33,13 +35,17 @@ def process_text_line(line):
     for s in sentences:
         s = remove_discussion_suffix(s)
 
+
         if len(s) >= 4:
             sentence_string = " ".join(s)
-            result.append(sentence_string)
+
+            # check if this line still contains a dirty comment:
+            if "( CEST )" not in sentence_string and "( CET )" not in sentence_string:
+                result.append(sentence_string)
 
     return result
 
-with open('output.txt', 'a') as output_file:
+with open(OUTPUT_FILE, 'a') as output_file:
 
     # to avoid new line at end of file
     first_line_written = False
@@ -76,7 +82,8 @@ with open('output.txt', 'a') as output_file:
                     
                     sentences = process_text_line(line)
                     
-                    if len(sentences) > 0:
+                    # ignore blank lines and make sure that stuff like "\n" is also ignored:
+                    if len(sentences) > 2:
                         for sentence in sentences:
                             if first_line_written == True:
                                 output_file.write("\n")
