@@ -98,9 +98,11 @@ def process_directory(input_dir, output_file):
                         
                         sentences = process_text_line(line)
                         
-                        # ignore blank lines and make sure that stuff like "\n" is also ignored:
-                        if len(sentences) > 2:
-                            for sentence in sentences:
+                        for sentence in sentences:
+
+                            # ignore blank lines and make sure that stuff like "\n" is also ignored:
+                            if len(sentence) > 2:
+
                                 if first_line_written == True:
                                     output_file.write("\n")
                                 else:
