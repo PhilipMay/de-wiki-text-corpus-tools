@@ -2,11 +2,11 @@ from somajo import Tokenizer, SentenceSplitter
 import os
 from multiprocessing import Pool, cpu_count
 
-INPUT_DIR = "/home/phmay/dev/wikiextractor/output-talk"
+INPUT_DIR = "data"
 
-OUTPUT_DIR = "output-talk"
+OUTPUT_DIR = "output"
 
-PROCESS_DISCUSSION = True
+PROCESS_DISCUSSION = False
 
 def is_doc_start_line(line):
     return line.startswith('<doc')
