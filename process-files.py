@@ -2,11 +2,11 @@ from somajo import Tokenizer, SentenceSplitter
 import os
 from multiprocessing import Pool, cpu_count
 
-INPUT_DIR = "data"
+INPUT_DIR = "/home/phmay/dev/wikiextractor/output-talk"
 
-OUTPUT_DIR = "output"
+OUTPUT_DIR = "output-talk"
 
-PROCESS_DISCUSSION = False
+PROCESS_DISCUSSION = True
 
 def is_doc_start_line(line):
     return line.startswith('<doc')
@@ -101,7 +101,7 @@ def process_directory(input_dir, output_file):
                         for sentence in sentences:
 
                             # ignore blank lines and make sure that stuff like "\n" is also ignored:
-                            if len(sentence) > 2:
+                            if (PROCESS_DISCUSSION == False and len(sentence) > 2) or (PROCESS_DISCUSSION == True and len(sentence) > 72):
 
                                 if first_line_written == True:
                                     output_file.write("\n")
