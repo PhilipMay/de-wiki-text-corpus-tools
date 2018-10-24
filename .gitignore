@@ -1,1 +1,6 @@
 .vscode
+data
+.DS_Store
+output.txt
+text_corpus.txt
+vocab.txt
