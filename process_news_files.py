@@ -2,17 +2,15 @@ from somajo import Tokenizer, SentenceSplitter
 import os
 from multiprocessing import Pool, cpu_count
 
-INPUT_DIR = "data"
+INPUT_DIR = "data/AA"
 
 OUTPUT_DIR = "output"
 
-PROCESS_DISCUSSION = False
-
-def get_data_dirs(root_dir):
+def get_data_file_names(root_dir):
     result = []
-    for _, d_, _ in os.walk(root_dir):
-        for dir in d_:
-            result.append(dir)
+    for _, _, files_ in os.walk(root_dir):
+        for f in files_:
+            result.append(f)
     return result
 
 def process_text_line(line):
@@ -32,52 +30,57 @@ def process_text_line(line):
 
     return result
 
-def process_directory(input_dir, output_file):
-    with open(os.path.join(OUTPUT_DIR, output_file), 'a') as output_file:
+def process_directory(input_file, output_file):
+    with open(output_file, 'a') as output_file:
 
         # to avoid new line at end of file
         first_line_written = False
 
-        # r_=root, d_=directories, f_=files
-        for r_, _, f_ in os.walk(input_dir):
-            for file_ in f_:
-                next_input_file = os.path.join(r_, file_)
-                print("Reading file:", next_input_file)
+        #print("Reading file:", input_file)
 
-                with open(next_input_file, "r") as input_file:
-                    
-                    for line in input_file:
+        with open(input_file, "r") as input_file:
+            
+            for line in input_file:
 
-                        # skip empty lines
-                        if len(line) <= 1:
-                            continue
-                        
-                        sentences = process_text_line(line)
-                        
-                        for sentence in sentences:
+                # skip empty lines
+                if len(line) <= 3:
+                    continue
+                
+                print("line:", line)
 
-                            # ignore blank lines and make sure that stuff like "\n" is also ignored:
-                            if len(sentence) > 2:
+                sentences = process_text_line(line)
 
-                                if first_line_written == True:
-                                    output_file.write("\n")
-                                else:
-                                    first_line_written = True
+                print("sentences", sentences)
 
-                                output_file.write(sentence)
+
+                for sentence in sentences:
+
+                    print(sentence)
+
+                    if len(sentence) > 2:
+
+                        if first_line_written == True:
+                            output_file.write("\n")
+                        else:
+                            first_line_written = True
+
+                        output_file.write(sentence)
 
 def pd(map_item):
     """Wrap call to process_directory to be called by map function"""
-    input_dir, output_file = map_item
+    input_file, output_file = map_item
     print("Creating:", output_file)
-    process_directory(input_dir, output_file)
+    process_directory(input_file, output_file)
+    print("Debug - :", input_file, "-", output_file)
 
 if __name__ == '__main__':
-    data_dirs = get_data_dirs(INPUT_DIR)
+    data_files = get_data_file_names(INPUT_DIR)
+    print(data_files)
+    #data_dirs = get_data_dirs(INPUT_DIR)
 
     call_list = []
-    for dir in data_dirs:
-        call_item = [os.path.join(INPUT_DIR, dir), dir + ".txt"]
+    for df in data_files:
+        call_item = [os.path.join(INPUT_DIR, df), os.path.join(OUTPUT_DIR, df + "-tokenized.txt")]
         call_list.append(call_item)
 
     pool_size = cpu_count() * 2

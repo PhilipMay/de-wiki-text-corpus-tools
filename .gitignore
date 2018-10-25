@@ -2,5 +2,6 @@
 data
 .DS_Store
 output.txt
+output
 text_corpus.txt
 vocab.txt
