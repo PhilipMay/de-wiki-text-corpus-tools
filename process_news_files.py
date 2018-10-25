@@ -46,16 +46,16 @@ def process_directory(input_file, output_file):
                 if len(line) <= 3:
                     continue
                 
-                print("line:", line)
+                #print("line:", line)
 
                 sentences = process_text_line(line)
 
-                print("sentences", sentences)
+                #print("sentences", sentences)
 
 
                 for sentence in sentences:
 
-                    print(sentence)
+                    #print(sentence)
 
                     if len(sentence) > 2:
 
@@ -71,11 +71,11 @@ def pd(map_item):
     input_file, output_file = map_item
     print("Creating:", output_file)
     process_directory(input_file, output_file)
-    print("Debug - :", input_file, "-", output_file)
+    #print("Debug - :", input_file, "-", output_file)
 
 if __name__ == '__main__':
     data_files = get_data_file_names(INPUT_DIR)
-    print(data_files)
+    #print(data_files)
     #data_dirs = get_data_dirs(INPUT_DIR)
 
     call_list = []
