@@ -1,11 +1,11 @@
 import os
 import shutil
 
-INPUT_DIR = 'data/AA'
+INPUT_DIR = 'train'
 
-TARGET_FILE = 'output.txt'
+TARGET_FILE = 'train.txt'
 
-first_file_written = False
+#first_file_written = False
 
 if __name__ == '__main__':
     with open(TARGET_FILE, 'a') as output_file:
@@ -15,9 +15,9 @@ if __name__ == '__main__':
                 print(next_file)
                 #first_file_written = False
                 with open(next_file, "r") as input_file:
-                    if first_file_written:
-                        output_file.write("\n")
-                    else:
-                        first_file_written = True
+                    #if first_file_written:
+                    #    output_file.write("\n")
+                    #else:
+                    #    first_file_written = True
 
                     shutil.copyfileobj(input_file, output_file)

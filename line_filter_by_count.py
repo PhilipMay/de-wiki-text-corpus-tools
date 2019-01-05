@@ -1,8 +1,8 @@
-INPUT_FILE = 'text_corpus.txt'
+INPUT_FILE = 'wiki-all-shuf.txt'
 
-OUTPUT_FILE = 'text_corpus_filtered.txt'
+OUTPUT_FILE = 'wiki-all-shuf-filtered.txt'
 
-TOP_WORS_TO_KEEP = 5
+TOP_WORS_TO_KEEP = 800000
 
 vocab_dict = {}
 
@@ -32,6 +32,7 @@ if __name__ == '__main__':
                 for t in tokens:
                     if t not in token_to_keep:
                         token_missing = True
+                        print(line)
                         break
                 if not token_missing:
                     line = line.replace('\n','')

@@ -1,33 +1,46 @@
-INPUT_FILE = 'text_corpus.txt'
+INPUT_FILE = 'train.txt'
 
-OUTPUT_FILE = 'vocab.txt'
+OUTPUT_FILE = 'vocab-train.txt'
+
+# Vocab token size
+TOKEN_TO_PICK = 800000
 
 vocab_dict = {}
 
 token_count = 0
 
 if __name__ == '__main__':
-    with open(INPUT_FILE, "r") as input_file: 
-        with open(OUTPUT_FILE, "w") as output_file:         
+    with open(INPUT_FILE, "r") as input_file:
+        with open(OUTPUT_FILE, "w") as output_file:
             for line in input_file:
                 tokens = line.split()
-                #print(tokens, "-", len(tokens))
                 token_count += len(tokens)
                 for token in tokens:
                     value = vocab_dict.get(token, 0)
                     vocab_dict[token] = value + 1
-        
+
             #print(vocab_dict)
             data = [(value, key) for key, value in vocab_dict.items()]
             data.sort(reverse=True)
+
+            ori_data_len = len(data)
+            print("Found so many token:", ori_data_len)
+
+            print("Selecting so many of the top token:", TOKEN_TO_PICK)
+
+            data = data[:TOKEN_TO_PICK]
+
+            print("New number of token:", len(data))
+            print("Removed so many token:", ori_data_len - len(data))
+
             #print(data)
             output_file.write("<S>\n</S>\n<UNK>")
             for d in data:
-                _, key = d
+                value, key = d
+                #if value > 3:
                 output_file.write("\n")
                 output_file.write(key)
-
-    print("Number of tokens:", token_count)
+    print("Token count of input file:", token_count)
 
     # TODO: <S>, </S> and <UNK> on top of file
 

@@ -2,9 +2,9 @@ from somajo import Tokenizer, SentenceSplitter
 import os
 from multiprocessing import Pool, cpu_count
 
-INPUT_DIR = "data/AA"
+INPUT_DIR = "/home/phmay/data/de_text_corpus/news/2010"
 
-OUTPUT_DIR = "output"
+OUTPUT_DIR = "/home/phmay/dev/de-wiki-text-corpus-tools/output/2010"
 
 def get_data_file_names(root_dir):
     result = []
@@ -75,7 +75,7 @@ def pd(map_item):
 
 if __name__ == '__main__':
     data_files = get_data_file_names(INPUT_DIR)
-    #print(data_files)
+    print(data_files)
     #data_dirs = get_data_dirs(INPUT_DIR)
 
     call_list = []
