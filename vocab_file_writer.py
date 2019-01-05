@@ -1,8 +1,10 @@
+"""Create vocabolary file from text corpus.
+"""
 INPUT_FILE = 'train.txt'
 
 OUTPUT_FILE = 'vocab-train.txt'
 
-# Vocab token size
+# Vocab max token size (number of words)
 TOKEN_TO_PICK = 800000
 
 vocab_dict = {}
@@ -19,7 +21,6 @@ if __name__ == '__main__':
                     value = vocab_dict.get(token, 0)
                     vocab_dict[token] = value + 1
 
-            #print(vocab_dict)
             data = [(value, key) for key, value in vocab_dict.items()]
             data.sort(reverse=True)
 
@@ -33,17 +34,9 @@ if __name__ == '__main__':
             print("New number of token:", len(data))
             print("Removed so many token:", ori_data_len - len(data))
 
-            #print(data)
             output_file.write("<S>\n</S>\n<UNK>")
             for d in data:
                 value, key = d
-                #if value > 3:
                 output_file.write("\n")
                 output_file.write(key)
     print("Token count of input file:", token_count)
-
-    # TODO: <S>, </S> and <UNK> on top of file
-
-    #data = [(100, "Hallo"), (10, "du"), (20, "ich")]
-    #data.sort()
-    #print(data)
